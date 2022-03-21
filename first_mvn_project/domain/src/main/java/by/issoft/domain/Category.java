@@ -1,7 +1,6 @@
 package by.issoft.domain;
 
-import com.github.javafaker.Cat;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category {
@@ -10,12 +9,11 @@ public class Category {
 
     public Category(String categoryName)
     {
-        this.categoryName = categoryName;
-    }
-public Category()
-{
 
-}
+        this.categoryName = categoryName;
+        productList = new ArrayList<Product>();
+    }
+
     public String getCategoryName() {
         return categoryName;
     }
@@ -26,14 +24,17 @@ public Category()
 
     public void addProduct(Product product)
     {
-        final boolean add = productList.add(product);
+        productList.add(product);
     }
 
-    public String printProductInfo(Product product)
+    public List<Product> getProductList() {return productList;}
+
+    public void printProductInfo(Product product)
     {
-        return getCategoryName() +
+        String info = getCategoryName() + " " +
             product.getName() + " " +
             product.getRate() + " " +
             product.getPrice();
+        System.out.println(info);
     }
 }

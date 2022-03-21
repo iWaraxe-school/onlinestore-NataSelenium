@@ -1,6 +1,5 @@
 package by.issoft.domain;
 
-//import java.text.DecimalFormat;
 
 public class Product {
     private String name;
@@ -26,7 +25,7 @@ public class Product {
         return rate;
     }
 
-    public void setRate(Byte rate) {
+    public void setRate(int rate) {
         this.rate = rate;
     }
 

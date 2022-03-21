@@ -1,32 +1,34 @@
 package store;
 
 import by.issoft.domain.Category;
-import by.issoft.domain.Product;
-import utils.RandomStorePopulator;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Store {
 
-    private Map<Category,Integer> categoryProductsMap = new HashMap<>();
+    private List<Category> categoryList  = new ArrayList<Category>();
 
     public Store() {}
 
-    public Map<Category, Integer> fillStoreWithProducts(Map<Category, Integer> categoryProductsMap)
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
+
+    public void addCategoryItem(Category category)
     {
-        RandomStorePopulator populate = new RandomStorePopulator();
-        for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet())
+        this.categoryList.add(category);
+    }
+
+    public void printAllCategories()
+    {
+        for (Category category : categoryList)
         {
-            for (int i = 0; i < entry.getValue(); i++)
-            {
-                Product product = new Product(
-                        populate.getProductName(entry.getKey().getCategoryName()),
-                        populate.getProductRate(),
-                        populate.getProductPrice());
-                        entry.getKey().addProduct(product);
-            }
+            System.out.println(category.getCategoryName());
         }
-        return categoryProductsMap;
     }
 }
