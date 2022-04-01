@@ -18,10 +18,6 @@ public class Category {
         return categoryName;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
     public void addProduct(Product product)
     {
         productList.add(product);
@@ -31,9 +27,9 @@ public class Category {
 
     public void printProductInfo(Product product)
     {
-        String info = getCategoryName() + " " +
-            product.getName() + " " +
-            product.getRate() + " " +
+        String info = "Category: " + getCategoryName() + ", Name: " +
+            product.getName() + ", Rate: " +
+            product.getRate() + ", Price:  " +
             product.getPrice();
         System.out.println(info);
     }

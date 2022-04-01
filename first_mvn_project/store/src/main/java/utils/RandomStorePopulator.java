@@ -28,6 +28,6 @@ public class RandomStorePopulator {
 
     public Double getProductPrice()
     {
-        return faker.number().randomDouble(1,1, 1000);
+        return faker.number().randomDouble(1,1, 100);
     }
 }
