@@ -2,14 +2,14 @@ package utils;
 
 import by.issoft.domain.Category;
 import by.issoft.domain.Product;
+import by.issoft.domain.sort.OrderType;
+import by.issoft.domain.sort.SortByName;
+import com.github.javafaker.Cat;
 import org.reflections.Reflections;
 import store.Store;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 public class StoreHelper {
 
@@ -20,7 +20,30 @@ public class StoreHelper {
         this.store = store;
     }
 
-    public void fillStoreWithProducts()
+public void sortProductsListCustom(Comparator<Product> comparator, OrderType  type)
+    {
+        Map<Category,Integer> unsortedMap = fillStoreWithProducts();
+
+        for (Map.Entry<Category, Integer> entry : unsortedMap.entrySet())
+        {
+            List<Product> sortedProductList = new ArrayList<>();
+            for (int i = 0; i < entry.getValue(); i++)
+            {
+                sortedProductList = entry.getKey().getProductList();
+                if (type == OrderType.ASC)
+                {Collections.sort(sortedProductList, comparator);}
+                else
+                {Collections.sort(sortedProductList, comparator.reversed());}
+
+            }
+            for (Product prod: sortedProductList)
+            {entry.getKey().printProductInfo(prod);}
+        }
+        //return unsortedMap;
+    }
+
+
+    public Map<Category,Integer> fillStoreWithProducts()
     {
         RandomStorePopulator populate = new RandomStorePopulator();
         Map<Category,Integer> categoryProductsMap = createProductListToAdd();
@@ -33,10 +56,10 @@ public class StoreHelper {
                         populate.getProductRate(),
                         populate.getProductPrice());
                 entry.getKey().addProduct(product);
-                entry.getKey().printProductInfo(product);
             }
             this.store.addCategoryItem(entry.getKey());
         }
+        return categoryProductsMap;
     }
 
     public static Map<Category, Integer> createProductListToAdd() {
