@@ -2,9 +2,6 @@ package utils;
 
 import by.issoft.domain.Category;
 import by.issoft.domain.Product;
-import by.issoft.domain.sort.OrderType;
-import by.issoft.domain.sort.SortByName;
-import com.github.javafaker.Cat;
 import org.reflections.Reflections;
 import store.Store;
 
@@ -14,34 +11,41 @@ import java.util.*;
 public class StoreHelper {
 
     Store store;
+    List<Product> allProductList;
 
     public StoreHelper(Store store)
     {
         this.store = store;
     }
 
-public void sortProductsListCustom(Comparator<Product> comparator, OrderType  type)
+    public void printStoreProductsList(List<Product> printList)
     {
+        for (Product product: printList)
+        {
+            product.printProductInformation(product);
+        }
+    }
+
+    public List<Product> getAllProductsStoreList()
+    {
+       allProductList = new ArrayList<Product>();
+       List<Product> items = null;
         Map<Category,Integer> unsortedMap = fillStoreWithProducts();
 
         for (Map.Entry<Category, Integer> entry : unsortedMap.entrySet())
         {
-            List<Product> sortedProductList = new ArrayList<>();
             for (int i = 0; i < entry.getValue(); i++)
             {
-                sortedProductList = entry.getKey().getProductList();
-                if (type == OrderType.ASC)
-                {Collections.sort(sortedProductList, comparator);}
-                else
-                {Collections.sort(sortedProductList, comparator.reversed());}
-
+            items = entry.getKey().getProductList();
+                    allProductList.add(new Product(entry.getKey().getCategoryName(),
+                            items.get(i).getName(),
+                            items.get(i).getRate(),
+                            items.get(i).getPrice()
+                            ));
             }
-            for (Product prod: sortedProductList)
-            {entry.getKey().printProductInfo(prod);}
         }
-        //return unsortedMap;
+        return allProductList;
     }
-
 
     public Map<Category,Integer> fillStoreWithProducts()
     {
