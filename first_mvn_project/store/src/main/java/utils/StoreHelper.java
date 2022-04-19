@@ -10,12 +10,22 @@ import java.util.*;
 
 public class StoreHelper {
 
-    Store store;
+    static Store store;
+    private static StoreHelper instance;
     List<Product> allProductList;
 
-    public StoreHelper(Store store)
+    private StoreHelper(Store store)
     {
         this.store = store;
+    }
+
+    public static StoreHelper getInstance(Store store)
+    {
+        if (instance == null)
+        {
+            instance = new StoreHelper(store);
+        }
+        return instance;
     }
 
     public void printStoreProductsList(List<Product> printList)

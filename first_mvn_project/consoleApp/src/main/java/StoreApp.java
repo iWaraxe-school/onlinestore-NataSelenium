@@ -2,7 +2,6 @@ import by.issoft.domain.Product;
 import store.Store;
 import utils.SortHelper;
 import utils.StoreHelper;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,13 +13,9 @@ public class StoreApp {
 
 
         Store store = new Store();
-        List<Product> allProductsList, sortedProductsList, top5ProductsList;
-        StoreHelper storeHelper = new StoreHelper(store);
+        StoreHelper storeHelper = StoreHelper.getInstance(store);
         SortHelper sortHelper = new SortHelper();
-        allProductsList = storeHelper.getAllProductsStoreList();
-        sortedProductsList = sortHelper.sortProductsListWithXMLFileOrder(allProductsList);
-        top5ProductsList = sortHelper.getTopStoreProducts(allProductsList);
-
+        List<Product> allProductsList = storeHelper.getAllProductsStoreList();
 
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -32,10 +27,10 @@ public class StoreApp {
                 String  action = br.readLine();
                 switch (action) {
                     case "sort":
-                        storeHelper.printStoreProductsList(sortedProductsList);
+                        storeHelper.printStoreProductsList(sortHelper.sortProductsListWithXMLFileOrder(allProductsList));
                         break;
                     case "top5":
-                        storeHelper.printStoreProductsList(top5ProductsList);
+                        storeHelper.printStoreProductsList(sortHelper.getTopStoreProducts(allProductsList));
                         break;
                     case "quit":
                         state = false;
@@ -45,5 +40,6 @@ public class StoreApp {
 
                 }
             }
+            br.close();
     }
 }
