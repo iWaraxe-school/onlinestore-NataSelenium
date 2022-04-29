@@ -40,13 +40,19 @@ public class StoreHelper {
     public List<Product> getAllProductsStoreList()
     {
        allProductList = new ArrayList<Product>();
+        List<Product> items = null;
         Map<Category,Integer> unsortedMap = fillStoreWithProducts();
 
         for (Map.Entry<Category, Integer> entry : unsortedMap.entrySet())
         {
             for (int i = 0; i < entry.getValue(); i++)
             {
-            allProductList.add(productFactory.getProduct(entry.getKey().getCategoryName()));
+                items = entry.getKey().getProductList();
+                allProductList.add(new Product(entry.getKey().getCategoryName(),
+                        items.get(i).getName(),
+                        items.get(i).getRate(),
+                        items.get(i).getPrice()
+                ));
             }
         }
         return allProductList;
