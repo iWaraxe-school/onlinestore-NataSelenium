@@ -13,6 +13,7 @@ public class StoreHelper {
     static Store store;
     private static StoreHelper instance;
     List<Product> allProductList;
+    ProductFactory productFactory = new ProductFactory();
 
     private StoreHelper(Store store)
     {
@@ -39,19 +40,19 @@ public class StoreHelper {
     public List<Product> getAllProductsStoreList()
     {
        allProductList = new ArrayList<Product>();
-       List<Product> items = null;
+        List<Product> items = null;
         Map<Category,Integer> unsortedMap = fillStoreWithProducts();
 
         for (Map.Entry<Category, Integer> entry : unsortedMap.entrySet())
         {
             for (int i = 0; i < entry.getValue(); i++)
             {
-            items = entry.getKey().getProductList();
-                    allProductList.add(new Product(entry.getKey().getCategoryName(),
-                            items.get(i).getName(),
-                            items.get(i).getRate(),
-                            items.get(i).getPrice()
-                            ));
+                items = entry.getKey().getProductList();
+                allProductList.add(new Product(entry.getKey().getCategoryName(),
+                        items.get(i).getName(),
+                        items.get(i).getRate(),
+                        items.get(i).getPrice()
+                ));
             }
         }
         return allProductList;
@@ -59,16 +60,12 @@ public class StoreHelper {
 
     public Map<Category,Integer> fillStoreWithProducts()
     {
-        RandomStorePopulator populate = new RandomStorePopulator();
         Map<Category,Integer> categoryProductsMap = createProductListToAdd();
         for (Map.Entry<Category, Integer> entry : categoryProductsMap.entrySet())
         {
             for (int i = 0; i < entry.getValue(); i++)
             {
-                Product product = new Product(
-                        populate.getProductName(entry.getKey().getCategoryName()),
-                        populate.getProductRate(),
-                        populate.getProductPrice());
+                Product product = productFactory.getProduct(entry.getKey().getCategoryName());
                 entry.getKey().addProduct(product);
             }
             this.store.addCategoryItem(entry.getKey());

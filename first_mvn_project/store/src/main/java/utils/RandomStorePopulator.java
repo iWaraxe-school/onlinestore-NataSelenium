@@ -1,7 +1,6 @@
 package utils;
 
 import com.github.javafaker.Faker;
-import store.Store;
 
 public class RandomStorePopulator {
 
