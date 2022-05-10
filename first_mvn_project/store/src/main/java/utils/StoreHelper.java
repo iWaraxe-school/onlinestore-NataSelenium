@@ -1,11 +1,10 @@
 package utils;
 
+import SQL.SQLqueries;
 import by.issoft.domain.Category;
 import by.issoft.domain.Product;
-import org.reflections.Reflections;
 import store.Store;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class StoreHelper {
@@ -55,6 +54,7 @@ public class StoreHelper {
                 ));
             }
         }
+
         return allProductList;
     }
 
@@ -76,22 +76,11 @@ public class StoreHelper {
     public static Map<Category, Integer> createProductListToAdd() {
         Map<Category, Integer> productsToAdd = new HashMap<>();
 
-        Reflections reflections = new Reflections("by.issoft.domain.categories");
-        Set<Class<? extends Category>> subTypes = reflections.getSubTypesOf(Category.class);
-
-        for (Class<? extends Category> type : subTypes) {
-            try {
-                Random random = new Random();
-                productsToAdd.put(type.getConstructor().newInstance(), random.nextInt(10));
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
+        final List<String> list = SQLqueries.getCategories();
+        for (String category: list)
+        {
+            Random random = new Random();
+            productsToAdd.put(new Category(category), random.nextInt(20));
         }
         return productsToAdd;
     }
