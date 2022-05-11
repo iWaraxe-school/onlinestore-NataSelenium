@@ -34,6 +34,8 @@ public class Product {
         return price;
     }
 
+    public String getCategory() {return category;}
+
     public void printProductInformation(Product product)
     {
         String info = "Category: " + category + ", Name: " +

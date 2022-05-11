@@ -13,7 +13,7 @@ public class ProductFactory
     public Product getProduct(String category)
     {
         Supplier<Product> productSupplier =
-                () -> new Product(category, populator.getProductName(category), populator.getProductRate(), populator.getProductPrice());
+                () -> new Product(category, populator.getProductName(category).replace("'", " "), populator.getProductRate(), populator.getProductPrice());
         return productSupplier.get();
     }
 }
