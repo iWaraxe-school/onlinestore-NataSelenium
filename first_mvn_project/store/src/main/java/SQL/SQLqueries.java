@@ -1,6 +1,6 @@
 package SQL;
-import by.issoft.domain.Product;
 
+import by.issoft.domain.Product;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,7 +141,7 @@ public class SQLqueries {
             conn = DriverManager.getConnection(DB_URL,USER,PASS);
 
             // STEP 3: Execute a query
-            System.out.println("Connected database successfully...");
+            //System.out.println("Connected database successfully...");
             stmt = conn.createStatement();
             String sql = "SELECT CATEGORY_NAME FROM CATEGORIES";
             ResultSet rs = stmt.executeQuery(sql);
